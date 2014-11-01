@@ -1,9 +1,11 @@
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/core-icon-button/core-icon-button.html">
-
-<polymer-element name="post-card">
+<!-- Define the new custom element -->
+<polymer-element name="post-card"> 
+<!-- Define the basic mark-up of the element -->
   <template>
     <style>
+    /*host is the element, in this case post-card*/
     :host {
       display: block;
       position: relative;
@@ -16,13 +18,32 @@
     .card-header {
       margin-bottom: 10px;
     }
+    /*polyfill next selector is in case shadow dom is not supported, it still allows styling of the insertions into the content tags*/
+    polyfill-next-selector { content: '.card-header h2'; }
+    .card-header ::content h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 300;
+    }
+    polyfill-next-selector { content: '.card-header img'; }
+    .card-header ::content img {
+      width: 70px;
+      border-radius: 50%;
+      margin: 10px;
+    }
     
     </style>
 
-    <!-- CARD CONTENTS GO HERE -->
+    <div class="card-header" layout horizontal center> <!-- LHC polymer shorthand for flex layout -->
+      <!-- content tags are like insertion points /ex/ any img children will be added in the content with select=img and so on -->
+      <content select="img"></content>
+      <content select="h2"></content>
+    </div>
+    <content></content>
     
   </template>
   <script>
-  Polymer({});
+  Polymer({}); 
+  // Registers the component I made so the browser will render it
   </script>
 </polymer-element>
